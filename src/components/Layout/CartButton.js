@@ -7,6 +7,7 @@ import CartIcon from "./CartIcon";
 const CartButton = (props) => {
   return (
     <motion.button
+      onClick={props.onClick}
       whileHover={{
         scale: 1.1,
         backgroundColor: "#89C2D9",

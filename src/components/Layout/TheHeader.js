@@ -5,7 +5,7 @@ const TheHeader = (props) => {
     <>
       <header className={classes.header}>
         <h1 className={classes.main_title}>Fooder</h1>
-        <CartButton />
+        <CartButton onClick={props.onShowCart} />
       </header>
     </>
   );
