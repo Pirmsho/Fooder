@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import classes from "./CartButton.module.css";
-
+import CartContext from "../../store/cart-context";
 import CartIcon from "./CartIcon";
 
 const CartButton = (props) => {
+  const cartCtx = useContext(CartContext);
+  const numberOfItemsInCart = cartCtx.items.reduce((curNumber, item) => {
+    return curNumber + item.amount;
+  }, 0);
   return (
     <motion.button
       onClick={props.onClick}
@@ -21,7 +25,7 @@ const CartButton = (props) => {
         <CartIcon />
       </span>
       <span>Shopping Cart</span>
-      <span className={classes.badge}>0</span>
+      <span className={classes.badge}>{numberOfItemsInCart}</span>
     </motion.button>
   );
 };
