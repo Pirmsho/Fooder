@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-
+import { motion, AnimatePresence } from "framer-motion";
 import classes from "./Modal.module.css";
 
 const Backdrop = (props) => {
@@ -7,9 +7,29 @@ const Backdrop = (props) => {
 };
 const ModalOverlay = (props) => {
   return (
-    <div className={classes.modal}>
-      <div className={classes.content}>{props.children}</div>
-    </div>
+    <AnimatePresence>
+      <motion.div
+        key="modal"
+        initial={{
+          y: -50,
+          opacity: 0,
+        }}
+        animate={{
+          y: 20,
+          opacity: 1,
+        }}
+        exit={{
+          y: -30,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 100,
+        }}
+        className={classes.modal}
+      >
+        <div className={classes.content}>{props.children}</div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

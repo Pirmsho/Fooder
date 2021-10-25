@@ -1,4 +1,5 @@
 import React from "react";
+
 import classes from "./CartItem.module.css";
 
 import { motion } from "framer-motion";

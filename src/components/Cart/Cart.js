@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { motion } from "framer-motion";
 import Modal from "../UI/Modal";
 import CartItem from "./CartItem";
 
@@ -12,8 +13,12 @@ const Cart = (props) => {
   const totalAmount = cartCtx.totalAmount.toFixed(2);
   const hasItems = cartCtx.items.length > 0;
 
-  const cartItemRemoveHandler = (id) => {};
-  const cartItemAddHandler = (item) => {};
+  const cartItemRemoveHandler = (id) => {
+    cartCtx.removeItem(id);
+  };
+  const cartItemAddHandler = (item) => {
+    cartCtx.addItem({ ...item, amount: 1 });
+  };
 
   const cartItems = (
     <ul className={classes["cart-items"]}>
@@ -35,10 +40,32 @@ const Cart = (props) => {
         <span>${totalAmount}</span>
       </div>
       <div className={classes.actions}>
-        <button onClick={props.onHide} className={classes["button--alt"]}>
+        <motion.button
+          whileHover={{
+            scale: 1.1,
+          }}
+          whileTap={{
+            scale: 0.9,
+          }}
+          onClick={props.onHide}
+          className={classes["button--alt"]}
+        >
           Close
-        </button>
-        {hasItems && <button className={classes.button}>Order</button>}
+        </motion.button>
+        {hasItems && (
+          <motion.button
+            onClick={props.onSuccess}
+            whileHover={{
+              scale: 1.1,
+            }}
+            whileTap={{
+              scale: 0.9,
+            }}
+            className={classes.button}
+          >
+            Order
+          </motion.button>
+        )}
       </div>
     </Modal>
   );

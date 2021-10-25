@@ -1,0 +1,24 @@
+.success_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: rgb(1, 194, 1);
+  width: 90%;
+  margin: 20px auto;
+  border-radius: 15px;
+  position: relative;
+}
+.success_text {
+  color: white;
+}
+
+.success_remove {
+  position: absolute;
+  top: 2px;
+  right: 10px;
+  font-size: 26px;
+  cursor: pointer;
+  color: wheat;
+  display: inline-block;
+}

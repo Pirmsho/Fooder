@@ -25,7 +25,13 @@ const CartButton = (props) => {
         <CartIcon />
       </span>
       <span>Shopping Cart</span>
-      <span className={classes.badge}>{numberOfItemsInCart}</span>
+      <span
+        className={
+          numberOfItemsInCart === 0 ? classes.badge : classes.badge_added
+        }
+      >
+        {numberOfItemsInCart}
+      </span>
     </motion.button>
   );
 };
