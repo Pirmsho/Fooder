@@ -15,7 +15,7 @@ const ModalOverlay = (props) => {
           opacity: 0,
         }}
         animate={{
-          y: 20,
+          y: 0,
           opacity: 1,
         }}
         exit={{

@@ -1,49 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import FoodItem from "./FoodItem";
 
 import Card from "../UI/Card";
+import LoadingSpinner from "../UI/LoadingSpinner";
 import classes from "./AvailableFood.module.css";
-const FAKE_FOOD = [
-  {
-    id: "f1",
-    name: "Steak",
-    description: "0.5kg Piece of Roast Meat",
-    price: "25.99",
-  },
-  {
-    id: "f2",
-    name: "Salad",
-    description: "Greek Salad with vegetables and Seafood",
-    price: "16.99",
-  },
-  {
-    id: "f3",
-    name: "Chimichanga",
-    description: "Mexican Specialty for dinner",
-    price: "15.99",
-  },
-  {
-    id: "f4",
-    name: "Burrito",
-    description: "Fresh burrito with spices",
-    price: "7.99",
-  },
-  {
-    id: "f5",
-    name: "Risotto",
-    description: "Rice dish with mushrooms",
-    price: "17.99",
-  },
-  {
-    id: "f6",
-    name: "Vegan Hamburger",
-    description: "Tasty non-meat hamburger",
-    price: "21.99",
-  },
-];
+
 const AvailableFood = () => {
-  const foodList = FAKE_FOOD.map((meal) => (
+  const [foods, setFoods] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [httpError, setError] = useState();
+
+  useEffect(() => {
+    const fetchFood = async () => {
+      setIsLoading(true);
+      const response = await fetch(
+        "https://fooder-12149-default-rtdb.firebaseio.com/meals.json"
+      );
+
+      if (!response.ok) {
+        throw new Error("Something Went Wrong!");
+      }
+
+      const responseData = await response.json();
+      const loadedFood = [];
+      for (const key in responseData) {
+        loadedFood.push({
+          id: key,
+          name: responseData[key].name,
+          description: responseData[key].description,
+          price: responseData[key].price,
+        });
+      }
+      setFoods(loadedFood);
+      setIsLoading(false);
+    };
+
+    fetchFood().catch((error) => {
+      setIsLoading(false);
+      setError(error.message);
+    });
+  }, []);
+
+  if (isLoading) {
+    return (
+      <section className={classes.LoadingSection}>
+        <LoadingSpinner />
+      </section>
+    );
+  }
+  if (httpError) {
+    return (
+      <section className={classes.LoadingSection}>
+        <p className={classes.err_message}>{httpError}</p>
+      </section>
+    );
+  }
+  const foodList = foods.map((meal) => (
     <FoodItem
       key={meal.id}
       name={meal.name}

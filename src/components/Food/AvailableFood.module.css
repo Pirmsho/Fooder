@@ -10,6 +10,16 @@
   margin: 0;
   padding: 0;
 }
+.LoadingSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+.err_message {
+  color: red;
+  font-weight: bold;
+}
 
 @keyframes meals-appear {
   from {
